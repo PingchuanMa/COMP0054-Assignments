@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import os
-import nltk
 from pandas import DataFrame
 import pandas as pd
 from nltk.tokenize import RegexpTokenizer
+import dill
 
 
 class Articles(object):
@@ -12,7 +12,7 @@ class Articles(object):
         self.path = path
         self.articles = []
         self.titles = []
-        self.dictionary = DataFrame(columns=['Word', 'Freq'])
+        self.dictionary = {}
         self.indexer = {}
         self.articles_num = 0
         self.read_articles()
@@ -75,28 +75,32 @@ class Articles(object):
         segments = self.init_segments()
         full_dict = DataFrame(columns=[
             'word',
-            'id',
+            'doc_id',
         ])
         for doc_id in range(self.articles_num):
             tokens = segments[doc_id]
             tiny_dict = DataFrame({
                 'word': tokens,
-                'id': doc_id,
+                'doc_id': doc_id,
             })
             full_dict = pd.concat([full_dict, tiny_dict])
         full_dict = full_dict.sort_values(["word"], ascending=True, kind='mergesort')
-        # self.dict = full_dict
-        for row in full_dict.iterrows():
-            word = row['word']
-            doc_id = row['doc_id']
-
+        for _, row in full_dict.iterrows():
+            word = row.word
+            doc_id = row.doc_id
+            if self.dictionary.setdefault(word, 0) == 0:
+                self.indexer[word] = [doc_id]
+            else:
+                self.indexer[word].append(doc_id)
+            self.dictionary[word] += 1
 
     def print_articles(self):
         # print(self.articles_num)
         # print(self.tokenize(self.titles[0]))
-        print(self.dict)
+        print(type(self.dictionary))
+        print(type(self.indexer))
         # print(self.titles)
-        print(self.dict[0:3])
+        # print(self.dict[0:3])
         pass
 
 
