@@ -15,6 +15,8 @@ class Articles(object):
         self.dictionary = {}
         self.indexer = {}
         self.articles_num = 0
+        self.dict_num = 0
+        self.universe = {}
         self.read_articles()
 
     def read_articles(self):
@@ -29,6 +31,7 @@ class Articles(object):
                     content += line
                 self.contents.append(content)
         self.articles_num = len(self.titles)
+        self.universe = set(range(self.articles_num))
 
     @staticmethod
     def rm_punc(content):
@@ -89,26 +92,23 @@ class Articles(object):
             word = row.word
             doc_id = row.doc_id
             if self.dictionary.setdefault(word, 0) == 0:
-                self.indexer[word] = [doc_id]
+                self.indexer[word] = {doc_id}
             else:
-                self.indexer[word].append(doc_id)
+                self.indexer[word].add(doc_id)
             self.dictionary[word] += 1
+        self.dict_num = len(self.dictionary)
 
     def save(self, file_name):
         path = os.path.join(os.getcwd(), file_name)
         with open(path, 'wb') as f:
             dill.dump(self, f)
 
-    # def load(self, file_name):
-    #     path = os.path.join(os.getcwd(), file_name)
-    #     with open(path, 'rb') as f:
-    #         self = dill.load(f)
-
     def print_articles(self):
         # print(self.articles_num)
         # print(self.tokenize(self.titles[0]))
         print(type(self.dictionary))
-        print(type(self.indexer))
+        print(self.indexer['shoot'])
+        print(self.universe)
         # print(self.titles)
         # print(self.dict[0:3])
         pass
@@ -118,6 +118,6 @@ if __name__ == "__main__":
     folder_name = "The Complete Works of William Shakespeare"
     a = Articles(folder_name)
     a.init_indexer()
-    # a.save("articles.pkl")
+    a.save("articles.pkl")
     # a.load("articles.pkl")
     a.print_articles()
