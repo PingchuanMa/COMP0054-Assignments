@@ -9,8 +9,8 @@ import dill
 class Articles(object):
 
     def __init__(self, path):
-        self.path = path
-        self.articles = []
+        self.path = os.path.join(os.getcwd(), path)
+        self.contents = []
         self.titles = []
         self.dictionary = {}
         self.indexer = {}
@@ -27,7 +27,7 @@ class Articles(object):
                 content = ""
                 for line in iter_:
                     content += line
-                self.articles.append(content)
+                self.contents.append(content)
         self.articles_num = len(self.titles)
 
     @staticmethod
@@ -47,7 +47,7 @@ class Articles(object):
     def tokenize(self, doc_id):
 
         # get content from collection of articles
-        content = self.articles[doc_id]
+        content = self.contents[doc_id]
 
         # turn all words in articles into lowercase
         content = Articles.turn_lower(content)
@@ -94,6 +94,16 @@ class Articles(object):
                 self.indexer[word].append(doc_id)
             self.dictionary[word] += 1
 
+    def save(self, file_name):
+        path = os.path.join(os.getcwd(), file_name)
+        with open(path, 'wb') as f:
+            dill.dump(self, f)
+
+    # def load(self, file_name):
+    #     path = os.path.join(os.getcwd(), file_name)
+    #     with open(path, 'rb') as f:
+    #         self = dill.load(f)
+
     def print_articles(self):
         # print(self.articles_num)
         # print(self.tokenize(self.titles[0]))
@@ -108,4 +118,6 @@ if __name__ == "__main__":
     folder_name = "The Complete Works of William Shakespeare"
     a = Articles(folder_name)
     a.init_indexer()
+    # a.save("articles.pkl")
+    # a.load("articles.pkl")
     a.print_articles()
