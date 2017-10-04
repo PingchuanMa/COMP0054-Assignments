@@ -1,6 +1,6 @@
 # Shakespearch
 
-This is the first assignment of COMP0054 (Principle of Information Retrieval System), which taught by Dr. [Yanlong Wen](http://cc.nankai.edu.cn/Teachers/Introduce.aspx?TID=wenyl) in Nankai University.
+This is the first assignment of COMP0054 (Principle of Information Retrieval System), which taught by [Dr. Yanlong Wen](http://cc.nankai.edu.cn/Teachers/Introduce.aspx?TID=wenyl) in Nankai University.
 
 ## Introduction
 
@@ -66,6 +66,29 @@ $ python3 web.py
 Then the console should tell you:
 
 ```bash
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
 
+Finally, open your browser, enter `http://127.0.0.1:5000/` to enjoy it.
 
-In order to complete this project, I downloaded "The Complete Works of William Shakespeare" from [Folger Shakespeare Digital Library](http://www.folgerdigitaltexts.org/download/)
+## Procedure of Development
+
+### Looking for Dataset
+
+There are thousands of project groups maintaining "The Complete Works of William Shakespeare", but an appreciable number of them combined the whole collection into literally **ONE** file. It is surely unfriendly for information process, query and retrieval.
+
+After some time, I found a split version of "The Complete Works of William Shakespeare" from [Folger Shakespeare Digital Library](http://www.folgerdigitaltexts.org/download/). That is a good news lol.
+
+### About `articles.py`
+
+In `articles.py`, the articles are loaded and splited
+
+```flow
+st=>start: Start
+op=>operation: Your Operation
+cond=>condition: Yes or No?
+e=>end
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
