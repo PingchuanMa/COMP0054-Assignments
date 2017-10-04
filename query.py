@@ -144,7 +144,6 @@ class Query(object):
 
         sent = Query.decorate_sent(sent)
         elements = WordPunctTokenizer().tokenize(sent)
-        print(elements)
         keywords = self.to_keywords(elements)
         return keywords
 

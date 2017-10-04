@@ -26,19 +26,20 @@ def search_result(sent):
     return render_template('search_result.html', entries=results, sent=sent)
 
 
-@app.route('/article/<title>?sent=<sent>')
-def show_article(title, sent):
+@app.route('/article/<title>', methods=['GET', 'POST'])
+def show_article(title):
+    sent = request.args.get('sent')
     keywords = query_sys.query_keywords(sent)
     idx = query_sys.articles.titles.index(title)
     raw_content = query_sys.articles.raw_contents[idx]
     return render_template('articles.html', title=title, content=raw_content, keywords=keywords)
 
 
-@app.route('/article/<title>')
-def independent_article(title):
-    idx = query_sys.articles.titles.index(title)
-    raw_content = query_sys.articles.raw_contents[idx]
-    return render_template('articles.html', title=title, content=raw_content, keywords=[])
+# @app.route('/article/<title>', methods=['GET', 'POST'])
+# def independent_article(title):
+#     idx = query_sys.articles.titles.index(title)
+#     raw_content = query_sys.articles.raw_contents[idx]
+#     return render_template('articles.html', title=title, content=raw_content, keywords=[])
 
 
 if __name__ == '__main__':
