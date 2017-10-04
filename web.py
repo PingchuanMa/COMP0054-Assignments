@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, flash, redirect, url_for
 from query import Query
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 folder_name = "The Complete Works of William Shakespeare"
 query_sys = Query(folder_name)
 query_sys.load_articles('articles.pkl')
