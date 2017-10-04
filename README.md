@@ -81,14 +81,20 @@ After some time, I found a split version of "The Complete Works of William Shake
 
 ### About `articles.py`
 
-In `articles.py`, the articles are loaded and splited
+The articles are loaded, processed, saved in `articles.py`:
 
-```flow
-st=>start: Start
-op=>operation: Your Operation
-cond=>condition: Yes or No?
-e=>end
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
+1. Load all Shakespeare's articles from an exact folder.
+2. Split articles from titles and contents while omitting some useless license declarations (also create some useful variances, meanwhile).
+3. Segment the whole article into words, with all words turned to lowercase and all punctuations and duplications removed.
+4. Compile all words into one object, then build a word dictionary storing their frequencies and a indexer indicating their containers (i.e. in which article).
+5. Save the object for future use (because indexer is rarely changed and extremely time-consuming to build anew).
+
+Conclusion:
+
+- [x] Load articles
+- [x] Detect titles and contents
+- [x] Segment into words
+- [x] Delete punctuations
+- [x] De-duplication
+- [x] Lowercase converted
+- [x] Store working environment
