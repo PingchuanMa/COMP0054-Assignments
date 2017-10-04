@@ -10,6 +10,7 @@ class Articles(object):
 
     def __init__(self, path):
         self.path = os.path.join(os.getcwd(), path)
+        self.raw_contents = []
         self.contents = []
         self.titles = []
         self.dictionary = {}
@@ -27,11 +28,24 @@ class Articles(object):
                 iter_ = iter(f)
                 self.titles.append(f.readline().replace("\n", ""))
                 content = ""
+                raw_content = []
+                i = 0
                 for line in iter_:
+                    if i < 7:
+                        i += 1
+                        continue
                     content += line
+                    raw_content.append(line)
                 self.contents.append(content)
+                self.raw_contents.append(raw_content)
         self.articles_num = len(self.titles)
         self.universe = set(range(self.articles_num))
+        for raw_content in self.raw_contents:
+            for idx, line in enumerate(raw_content):
+                if len(line) == 0 or line.isspace():
+                    del raw_content[idx]
+                else:
+                    break
 
     @staticmethod
     def rm_punc(content):

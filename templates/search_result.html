@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Shakespearch</title>
+  <link rel="stylesheet" href="/static/css/style_alt.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/speech-input.css">
+</head>
+
+<body>
+  <div class="search s1">
+    <form action="{{ url_for('search') }}" method=post>
+      <input type="text" class="speech-input" placeholder="Search here..." name="query" required>
+      <button type="submit"></button>
+    </form>
+  </div>
+  <ul class=articles>
+  {% for title, contents in entries %}
+    <li><a href={{ url_for('show_article', title=title, sent=sent)}} target="_blank"><h2>{{ title }}</h2></a>
+    <p>{% for content in contents %}
+      <br>{{ content }}
+      {% endfor %}</p>
+  {% else %}
+    <li><em>Shakespeare knows nothing about that.</em>
+  {% endfor %}
+  </ul>
+<script src="/static/scripts/speech-input.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

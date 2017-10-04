@@ -92,6 +92,13 @@ class Query(object):
             post.append(stack.pop())
         return post
 
+    def to_keywords(self, elements):
+        keywords = []
+        for element in elements:
+            if self.OPERATORS.get(element, None) is None:
+                keywords.append(element)
+        return keywords
+
     def calculate_post(self, post):
         stack = []
         for element in post:
@@ -131,11 +138,18 @@ class Query(object):
         elements = WordPunctTokenizer().tokenize(sent)
         post = self.to_post(elements)
         result = self.calculate_post(post)
-        print(result)
+        return result
 
+    def query_keywords(self, sent):
+
+        sent = Query.decorate_sent(sent)
+        elements = WordPunctTokenizer().tokenize(sent)
+        print(elements)
+        keywords = self.to_keywords(elements)
+        return keywords
 
 if __name__ == '__main__':
     folder_name = "The Complete Works of William Shakespeare"
     q = Query(folder_name)
     q.load_articles('articles.pkl')
-    q.query('a and the and not spit')
+    q.query_keywords('a and the and not spit')
