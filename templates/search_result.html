@@ -12,7 +12,7 @@
 <body>
   <div class="search s1">
     <form action="{{ url_for('search') }}" method=post>
-      <input type="text" class="speech-input" placeholder="Search here..." name="query" required>
+      <input type="text" class="speech-input" placeholder="Search here..." value="{{ sent }}" name="query" required>
       <button type="submit"></button>
     </form>
   </div>

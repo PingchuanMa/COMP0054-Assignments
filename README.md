@@ -70,31 +70,3 @@ Then the console should tell you:
 ```
 
 Finally, open your browser, enter `http://127.0.0.1:5000/` to enjoy it.
-
-## Procedure of Development
-
-### Looking for Dataset
-
-There are thousands of project groups maintaining "The Complete Works of William Shakespeare", but an appreciable number of them combined the whole collection into literally **ONE** file. It is surely unfriendly for information process, query and retrieval.
-
-After some time, I found a split version of "The Complete Works of William Shakespeare" from [Folger Shakespeare Digital Library](http://www.folgerdigitaltexts.org/download/). That is a good news lol.
-
-### About `articles.py`
-
-The articles are loaded, processed, saved in `articles.py`:
-
-1. Load all Shakespeare's articles from an exact folder.
-2. Split articles from titles and contents while omitting some useless license declarations (also create some useful variances, meanwhile).
-3. Segment the whole article into words, with all words turned to lowercase and all punctuations and duplications removed.
-4. Compile all words into one object, then build a word dictionary storing their frequencies and a indexer indicating their containers (i.e. in which article).
-5. Save the object for future use (because indexer is rarely changed and extremely time-consuming to build anew).
-
-Conclusion:
-
-- [x] Load articles
-- [x] Detect titles and contents
-- [x] Segment into words
-- [x] Delete punctuations
-- [x] De-duplication
-- [x] Lowercase converted
-- [x] Store working environment
