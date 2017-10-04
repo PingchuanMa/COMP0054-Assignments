@@ -19,6 +19,8 @@ def search():
 
 @app.route('/<sent>')
 def search_result(sent):
+    if sent == 'favicon.ico':
+        return "/static/images/favicon.ico"
     final_set = query_sys.query(sent)
     results = []
     for idx in final_set:

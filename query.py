@@ -57,7 +57,7 @@ class Query(object):
 
     def get_set(self, p1):
         assert isinstance(p1, str)
-        return self.articles.indexer.get(p1, {})
+        return self.articles.indexer.get(p1, set([]))
 
     def to_post(self, elements):
         stack = []
