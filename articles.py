@@ -26,14 +26,10 @@ class Articles(object):
             assert not os.path.isdir(name)
             with open(os.path.join(self.path, name), 'r') as f:
                 iter_ = iter(f)
-                self.titles.append(f.readline().replace("\n", ""))
+                self.titles.append(f.readline().replace("\n", "").strip())
                 content = ""
                 raw_content = []
-                i = 0
                 for line in iter_:
-                    if i < 7:
-                        i += 1
-                        continue
                     content += line
                     raw_content.append(line)
                 self.contents.append(content)
