@@ -24,7 +24,7 @@ def search_result(sent):
     try:
         final_set = query_sys.query(sent)
     except Exception:
-        final_set = set([])
+        final_set = []
     results = []
     for idx in final_set:
         results.append([query_sys.articles.titles[idx], query_sys.articles.raw_contents[idx][0:10]])

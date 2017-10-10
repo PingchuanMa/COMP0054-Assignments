@@ -17,11 +17,12 @@ class Articles(object):
         self.indexer = {}
         self.articles_num = 0
         self.dict_num = 0
-        self.universe = {}
+        self.universe = []
         self.read_articles()
 
     def read_articles(self):
         file_names = os.listdir(self.path)
+        file_names.sort()
         for name in file_names:
             assert not os.path.isdir(name)
             with open(os.path.join(self.path, name), 'r') as f:
@@ -35,7 +36,7 @@ class Articles(object):
                 self.contents.append(content)
                 self.raw_contents.append(raw_content)
         self.articles_num = len(self.titles)
-        self.universe = set(range(self.articles_num))
+        self.universe = range(self.articles_num)
         for raw_content in self.raw_contents:
             for idx, line in enumerate(raw_content):
                 if len(line) == 0 or line.isspace():
@@ -102,9 +103,9 @@ class Articles(object):
             word = row.word
             doc_id = row.doc_id
             if self.dictionary.setdefault(word, 0) == 0:
-                self.indexer[word] = {doc_id}
+                self.indexer[word] = [doc_id]
             else:
-                self.indexer[word].add(doc_id)
+                self.indexer[word].append(doc_id)
             self.dictionary[word] += 1
         self.dict_num = len(self.dictionary)
 

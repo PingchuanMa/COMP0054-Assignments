@@ -41,23 +41,63 @@ class Query(object):
 
     @staticmethod
     def plus(p1, p2):
-        assert isinstance(p1, set)
-        assert isinstance(p2, set)
-        return p1 | p2
+        assert isinstance(p1, list)
+        assert isinstance(p2, list)
+        result = []
+        i = j = 0
+        while i < len(p1):
+            if j < len(p2):
+                if p1[i] < p2[j]:
+                    result.append(p1[i])
+                    i += 1
+                elif p1[i] > p2[j]:
+                    result.append(p2[j])
+                    j += 1
+                else:
+                    result.append(p1[i])
+                    i += 1
+                    j += 1
+            else:
+                result.extend(p1[i:])
+                break
+        if j < len(p2):
+            result.extend(p2[j:])
+            return result
 
     @staticmethod
     def mult(p1, p2):
-        assert isinstance(p1, set)
-        assert isinstance(p2, set)
-        return p1 & p2
+        assert isinstance(p1, list)
+        assert isinstance(p2, list)
+        result = []
+        i = j = 0
+        while i < len(p1):
+            if j < len(p2):
+                if p1[i] < p2[j]:
+                    i += 1
+                elif p1[i] > p2[j]:
+                    j += 1
+                else:
+                    result.append(p1[i])
+                    i += 1
+                    j += 1
+            else:
+                break
+        return result
 
     def excl(self, p1):
-        assert isinstance(p1, set)
-        return self.articles.universe - p1
+        assert isinstance(p1, list)
+        i = 0
+        result = []
+        for element_ in self.articles.universe:
+            if i >= len(p1) or p1[i] > element_:
+                result.append(element_)
+            else:
+                i += 1
+        return result
 
-    def get_set(self, p1):
+    def get_container(self, p1):
         assert isinstance(p1, str)
-        return self.articles.indexer.get(p1, set([]))
+        return self.articles.indexer.get(p1, [])
 
     def to_post(self, elements):
         stack = []
@@ -103,7 +143,7 @@ class Query(object):
         stack = []
         for element in post:
             if self.OPERATORS.get(element, None) is None:
-                stack.append(self.get_set(element))
+                stack.append(self.get_container(element))
             else:
                 assert len(stack) > 0
                 if element == '~':
@@ -147,8 +187,10 @@ class Query(object):
         keywords = self.to_keywords(elements)
         return keywords
 
+
 if __name__ == '__main__':
     folder_name = "The Complete Works of William Shakespeare"
     q = Query(folder_name)
     q.load_articles('articles.pkl')
-    q.query_keywords('a and the and not spit')
+    print(q.query_keywords('a and the and not spit'))
+    print(q.query('a and the and not spit'))
