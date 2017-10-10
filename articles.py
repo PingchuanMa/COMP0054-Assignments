@@ -27,8 +27,9 @@ class Articles(object):
             assert not os.path.isdir(name)
             with open(os.path.join(self.path, name), 'r') as f:
                 iter_ = iter(f)
-                self.titles.append(f.readline().replace("\n", "").strip())
-                content = ""
+                title = f.readline().replace("\n", "").strip()
+                self.titles.append(title)
+                content = title + " "
                 raw_content = []
                 for line in iter_:
                     content += line
@@ -116,7 +117,7 @@ class Articles(object):
 
     def print_articles(self):
         # print(self.articles_num)
-        # print(self.tokenize(self.titles[0]))
+        print(self.contents[0])
         print(type(self.dictionary))
         print(self.indexer['shoot'])
         print(self.universe)
