@@ -62,7 +62,7 @@ class Query(object):
                 break
         if j < len(p2):
             result.extend(p2[j:])
-            return result
+        return result
 
     @staticmethod
     def mult(p1, p2):
@@ -177,6 +177,7 @@ class Query(object):
         sent = Query.decorate_sent(sent)
         elements = WordPunctTokenizer().tokenize(sent)
         post = self.to_post(elements)
+        print(post)
         result = self.calculate_post(post)
         return result
 
@@ -192,5 +193,4 @@ if __name__ == '__main__':
     folder_name = "The Complete Works of William Shakespeare"
     q = Query(folder_name)
     q.load_articles('articles.pkl')
-    print(q.query_keywords('a and the and not spit'))
-    print(q.query('a and the and not spit'))
+    print(q.query('CHARACTERS and duke | ! safe'))
