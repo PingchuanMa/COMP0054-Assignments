@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Googie</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/speech-input.css">
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+</head>
+
+<style>
+  .styled-select select {
+   background: white;
+   width: 110px;
+   padding: 5px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 42px;
+   float:left;
+    border-radius: 5px;
+}
+  .div-d{ float:right;}
+</style>
+
+<body>
+<header>
+  <div align="center">
+  <img src="/static/images/logo.png" width="600px" style="margin-top:100px">
+  </div>
+
+  <div class="search s1">
+    <form action="{{ url_for('search') }}" method=post>
+      <div class="styled-select">
+      <select name="type">
+        <option value="website">  Website</option>
+        <option value="image">    Image</option>
+        <option value="document"> Document</option>
+        <option value="file">     File</option>
+      </select>
+      </div>
+      <div class="div-d">
+      <input type="text" placeholder="Search here..." class="speech-input" name="query" required><button type="submit"></button>
+      </div>
+    </form>
+  </div>
+
+</header>
+
+<script src="/static/scripts/speech-input.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

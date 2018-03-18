@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Googie</title>
+  <link rel="stylesheet" href="/static/css/style_alt.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/speech-input.css">
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+  <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+  .styled-select select {
+   background: white;
+   width: 110px;
+   padding: 5px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 42px;
+   float:left;
+    border-radius: 5px;
+}
+  .div-d{ float:right;}
+</style>
+
+<body>
+  <div class="search s1">
+    <form action="{{ url_for('search') }}" method=post>
+      <div class="styled-select">
+      <select name="type">
+        <option value="website">  Website</option>
+        <option value="image">    Image</option>
+        <option value="document"> Document</option>
+        <option value="file">     File</option>
+      </select>
+      </div>
+      <div class="div-d">
+      <input type="text" placeholder="Search here..." class="speech-input" value={{sent}} name="query" required><button type="submit"></button>
+      </div>
+    </form>
+  </div>
+  <ul class=articles>
+  {% for url, path, keywords, title, brief in details %}
+    <li><a href={{url}} target="_blank"><h2>{{ title }}</h2></a>
+      {% if target == 'website' %}
+        <p>Matched terms: {{','.join(keywords)}} Cached: <a href={{ url_for('show_article', p=path) }}>html</a></p>
+        <p>{{brief}}</p>
+      {% else %}
+        <p>Matched terms: {{','.join(keywords)}}</p>
+        {% if target == 'image' %}
+          <img src={{url}} alt={{title}}>
+        {% endif %}
+      {% endif %}
+
+  {% else %}
+    <li><em>对不起，你知道的太多了。我是一个冷酷无情的杀手，砰。</em>
+  {% endfor %}
+  </ul>
+  {% if details|length > 0 %}
+  <div align="center">
+  <ul class="pagination">
+    <li><a href={{url_for('search_result', sent=sent, target=target, page=page-1)}}>&laquo;</a></li>
+    {% for i in range(1 if max_page < 10 else page, max_page + 1 if max_page - page < 10 else page + 10) %}
+      {% if i == page %}
+        <li class="active"><a href={{url_for('search_result', sent=sent, target=target, page=i)}}>{{i}}</a></li>
+      {% else %}
+        <li><a href={{url_for('search_result', sent=sent, target=target, page=i)}}>{{i}}</a></li>
+      {% endif %}
+    {% endfor %}
+    <li><a href={{url_for('search_result', sent=sent, target=target, page=page+1)}}>&raquo;</a></li>
+  </ul>
+    </div>
+  {% endif %}
+<script src="/static/scripts/speech-input.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>NKUScholar</title>
+  <link rel="stylesheet" href="/static/css/style_alt.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/speech-input.css">
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+</head>
+
+<body>
+  <div class="search s1">
+    <form action="{{ url_for('search') }}" method=post>
+      <input type="text" class="speech-input" placeholder="Search here..." value="{{ sent }}" name="query" required>
+      <button type="submit"></button>
+    </form>
+  </div>
+  <ul class=articles>
+  {% for title, contents, file_name in entries %}
+    <li><a href={{ "/static/papers/" + file_name}} target="_blank"><h2>{{ title }}</h2></a>
+    <p>{% for content in contents %}
+      <br>{{ content }}
+      {% endfor %}</p>
+  {% else %}
+    <li><em>Is this the title of next CVPR best paper?</em>
+  {% endfor %}
+  </ul>
+<script src="/static/scripts/speech-input.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

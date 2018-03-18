@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="/static/scripts/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/static/scripts/jquery.highlight.js"></script>
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+</head>
+
+<body>
+  <div id='title'>
+  <h1>{{ title }}</h1>
+  </div>
+  <div id='content'>
+  {% for line in content %}
+    <br>{{line}}
+  {% endfor %}
+  </div>
+  <script>
+    {% for keyword in keywords %}
+      $("div#content").highlight("{{ keyword }}", { wordsOnly: true });
+    {% endfor %}
+    $(".highlight").css({ backgroundColor: "#FFFF88" });
+  </script>
+</body>
+</html>

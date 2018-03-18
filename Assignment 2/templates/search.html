@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>NKUScholar</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/speech-input.css">
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+</head>
+
+<body>
+<header>
+  <div align="center">
+  <img src="/static/images/logo.png" width="600px" style="margin-top:100px">
+  </div>
+
+  <div class="search s1">
+    <form action="{{ url_for('search') }}" method=post>
+      <input type="text" placeholder="Search here..." class="speech-input" name="query" required>
+      <button type="submit"></button>
+    </form>
+  </div>
+
+</header>
+
+<script src="/static/scripts/speech-input.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
